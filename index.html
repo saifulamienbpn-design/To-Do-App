@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todo List</title>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #e2e8f0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #1e293b;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 15px rgba(100, 100, 255, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #f1f5f9;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #334155;
+      color: #f1f5f9;
+    }
+
+    #add-btn {
+      padding: 10px;
+      background-color: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #334155;
+      color: #cbd5e1;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #475569;
+    }
+
+    tbody td button {
+      margin-right: 5px;
+      padding: 6px 8px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-complete {
+      background-color: #22c55e;
+      color: white;
+    }
+
+    .btn-delete {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Todo List</h1>
+    <div class="input-group">
+      <input type="text" id="task-input" placeholder="Add a todo...">
+      <input type="date" id="date-input">
+      <button id="add-btn">+</button>
+    </div>
+    <div class="control-group">
+      <button id="filter-btn">FILTER</button>
+      <button id="delete-all-btn">DELETE ALL</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>TASK</th>
+          <th>DUE DATE</th>
+          <th>STATUS</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody id="task-table">
+        <tr><td colspan="4">No task found</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById('task-input');
+    const dateInput = document.getElementById('date-input');
+    const addBtn = document.getElementById('add-btn');
+    const taskTable = document.getElementById('task-table');
+    const deleteAllBtn = document.getElementById('delete-all-btn');
+
+    let tasks = [];
+
+    function renderTasks() {
+      taskTable.innerHTML = '';
+
+      if (tasks.length === 0) {
+        const row = taskTable.insertRow();
+        const cell = row.insertCell(0);
+        cell.colSpan = 4;
+        cell.innerText = 'No task found';
+        return;
+      }
+
+      tasks.forEach((task, index) => {
+        const row = taskTable.insertRow();
+
+        row.insertCell(0).innerText = task.text;
+        row.insertCell(1).innerText = task.date || '-';
+        row.insertCell(2).innerText = task.completed ? 'Done' : 'Pending';
+
+        const actionCell = row.insertCell(3);
+        
+        const completeBtn = document.createElement('button');
+        completeBtn.innerText = '✔';
+        completeBtn.className = 'btn-complete';
+        completeBtn.onclick = () => toggleComplete(index);
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerText = '✖';
+        deleteBtn.className = 'btn-delete';
+        deleteBtn.onclick = () => deleteTask(index);
+
+        actionCell.appendChild(completeBtn);
+        actionCell.appendChild(deleteBtn);
+      });
+    }
+
+    function addTask() {
+      const text = taskInput.value.trim();
+      const date = dateInput.value;
+
+      if (text === '') return;
+
+      tasks.push({ text, date, completed: false });
+      taskInput.value = '';
+      dateInput.value = '';
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      renderTasks();
+    }
+
+    function toggleComplete(index) {
+      tasks[index].completed = !tasks[index].completed;
+      renderTasks();
+    }
+
+    addBtn.addEventListener('click', addTask);
+    deleteAllBtn.addEventListener('click', () => {
+      tasks = [];
+      renderTasks();
+    });
+
+    renderTasks();
+  </script>
+</body>
+</html>

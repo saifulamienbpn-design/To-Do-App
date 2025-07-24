@@ -1,0 +1,93 @@
+body {
+  background-color: #0f172a;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  margin: 0;
+}
+
+.container {
+  background-color: #1e293b;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 15px rgba(100, 100, 255, 0.3);
+}
+
+h1 {
+  text-align: center;
+  color: #f1f5f9;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="date"] {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #334155;
+  color: #f1f5f9;
+}
+
+#add-btn {
+  padding: 10px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.control-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #334155;
+  color: #cbd5e1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #475569;
+}
+
+tbody td button {
+  margin-right: 5px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-complete {
+  background-color: #22c55e;
+  color: white;
+}
+
+.btn-delete {
+  background-color: red;
+  color: white;
+}
